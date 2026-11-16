@@ -46,11 +46,15 @@
 需要先安装 [Flutter](https://flutter.dev) 和 [Rust](https://rustup.rs)
 
 ```bash
-git clone https://github.com/LuckyLxi/kanade.git
-cd kanade
+git clone https://github.com/Hollowden/Personal-Kanade.git
+cd Personal-Kanade
 flutter pub get
 flutter run -d windows
 ```
+
+## 本 Fork 的词幕适配
+
+Hollowden 在此 Fork 中加入了 Kanade 歌词快照桥接，以及供 Lyricon（词幕服务）使用的 [歌词提供插件](extras/kanade-lyricon-provider/README.md)。插件是独立的 LSPosed 模块，作用域为 Kanade；原项目的代码和署名仍归 LuckyLxi。
 
 ## 许可证
 

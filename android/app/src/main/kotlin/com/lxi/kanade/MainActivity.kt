@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : AudioServiceActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        installLyriconBridge(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kanade/app_login").setMethodCallHandler { call, result ->
             when (call.method) {
                 // 必须指定包名：QQ 音乐也注册了 wtloginmqq://，不指定可能被它接走
@@ -26,6 +27,18 @@ class MainActivity : AudioServiceActivity() {
                         false
                     },
                 )
+                else -> result.notImplemented()
+            }
+        }
+    }
+
+    private fun installLyriconBridge(flutterEngine: FlutterEngine) {
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kanade.lyricon_bridge").setMethodCallHandler { call, result ->
+            when (call.method) {
+                "update" -> {
+                    LyriconSnapshotProvider.snapshot = call.argument<String>("json")
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         }

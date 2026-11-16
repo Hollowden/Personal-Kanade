@@ -43,6 +43,11 @@
             <!-- 回调链接只用来切回前台，不交给 Flutter 当路由 -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
         </activity>
+        <!-- 歌词快照只给同 UID 的 LSPosed 模块读取 -->
+        <provider
+            android:name=".LyriconSnapshotProvider"
+            android:authorities="com.lxi.kanade.lyricon"
+            android:exported="false" />
         <service android:name="com.ryanheise.audioservice.AudioService"
             android:foregroundServiceType="mediaPlayback"
             android:exported="true" tools:ignore="Instantiatable">

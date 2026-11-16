@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'auth/auth_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'library/library_controller.dart';
+import 'player/lyricon_bridge.dart';
 import 'player/media_session.dart';
 import 'player/player_controller.dart';
 import 'settings/locale_controller.dart';
@@ -62,12 +63,22 @@ class _MediaSessionHost extends StatefulWidget {
 }
 
 class _MediaSessionHostState extends State<_MediaSessionHost> {
+  LyriconBridge? _lyricon;
+
   @override
   void initState() {
     super.initState();
+    final player = context.read<PlayerController>();
+    _lyricon = LyriconBridge.attach(player);
     unawaited(
-      MediaSession.attach(context.read<PlayerController>(), context.read<LibraryController>(), context.read<LocaleController>()),
+      MediaSession.attach(player, context.read<LibraryController>(), context.read<LocaleController>()),
     );
+  }
+
+  @override
+  void dispose() {
+    _lyricon?.dispose();
+    super.dispose();
   }
 
   @override
